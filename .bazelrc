@@ -27,3 +27,19 @@ build --incompatible_require_linker_input_cc_api=false
 
 build:macos --apple_platform_type=macos
 build:macos_arm64 --cpu=darwin_arm64
+build --conlyopt=-std=c11
+build --host_conlyopt=-std=c11
+build --cxxopt=-std=c++17
+build --host_cxxopt=-std=c++17
+build --copt=-Wno-error
+build --cxxopt=-Wno-error
+build --cxxopt=-fpermissive
+build --copt=-Wno-array-parameter
+build --copt=-Wno-implicit-function-declaration
+build --host_copt=-Wno-error
+build --host_cxxopt=-Wno-error
+build --host_cxxopt=-fpermissive
+build --host_copt=-Wno-array-parameter
+build --host_copt=-Wno-implicit-function-declaration
+build --linkopt=-Wl,--no-as-needed
+build --host_linkopt=-Wl,--no-as-needed

@@ -1,0 +1,16 @@
+name: ml-metadata-build
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - cmake=3.31
+  - make
+  - pkg-config
+  - c-compiler
+  - cxx-compiler
+  - openjdk=21
+  - setuptools
+  - wheel
+  - pip
+
