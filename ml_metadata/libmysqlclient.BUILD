@@ -91,6 +91,12 @@ cc_library(
         "-DLIBICONV_PLUG",
         "-DHAVE_OPENSSL",
         "-DHAVE_TLS",
+        # GCC 13 / Ubuntu 24.04 compatibility: define legacy MySQL types using stdint.h types
+        "-Duint=uint32_t",
+        "-Dushort=uint16_t",
+        "-Dulong=uint64_t",
+        # Fix implicit function declarations
+        "-D_GNU_SOURCE",
     ],
     includes = [
         "build/include/",

@@ -24,18 +24,13 @@ http_archive(
     sha256 = "5308fc1d8865406a49427ba24a9ab53087f17f5266a7aabbfc28823f3916e1ca",
 )
 
-# Install version 0.9.0 of rules_foreign_cc, as default version causes an
-# invalid escape sequence error to be raised, which can't be avoided with
-# the --incompatible_restrict_string_escapes=false flag (flag was removed in
-# Bazel 5.0).
-RULES_FOREIGN_CC_VERSION = "0.9.0"
+# Install version 0.12.0 of rules_foreign_cc
+RULES_FOREIGN_CC_VERSION = "0.12.0"
 http_archive(
     name = "rules_foreign_cc",
-    sha256 = "2a4d07cd64b0719b39a7c12218a3e507672b82a97b98c6a89d38565894cf7c51",
+    sha256 = "a2e6fb56e649c1ee79703e99aa0c9d13c6cc53c8d7a0cbb8797ab2888bbc99a3",
     strip_prefix = "rules_foreign_cc-%s" % RULES_FOREIGN_CC_VERSION,
     url = "https://github.com/bazelbuild/rules_foreign_cc/archive/refs/tags/%s.tar.gz" % RULES_FOREIGN_CC_VERSION,
-    patch_tool = "patch",
-    patches = ["//ml_metadata/third_party:rules_foreign_cc.patch",],
 )
 
 load("@rules_foreign_cc//foreign_cc:repositories.bzl", "rules_foreign_cc_dependencies")
@@ -43,9 +38,9 @@ rules_foreign_cc_dependencies()
 
 http_archive(
     name = "com_google_absl",
-    urls = ["https://github.com/abseil/abseil-cpp/archive/940c06c25d2953f44310b68eb8aab6114dba11fb.zip"],
-    strip_prefix = "abseil-cpp-940c06c25d2953f44310b68eb8aab6114dba11fb",
-    sha256 = "0e800799aa64d0b4d354f3ff317bbd5fbf42f3a522ab0456bb749fc8d3b67415",
+    urls = ["https://github.com/abseil/abseil-cpp/archive/refs/tags/20230802.1.tar.gz"],
+    strip_prefix = "abseil-cpp-20230802.1",
+    sha256 = "987ce98f02eefbaf930d6e38ab16aa05737234d7afbab2d5c4ea7adbe50c28ed",
 )
 
 http_archive(
@@ -60,18 +55,18 @@ http_archive(
 http_archive(
     name = "org_sqlite",
     build_file = clean_dep("//ml_metadata/third_party:sqlite.BUILD"),
-    sha256 = "87775784f8b22d0d0f1d7811870d39feaa7896319c7c20b849a4181c5a50609b",
-    strip_prefix = "sqlite-amalgamation-3390200",
+    sha256 = "aa73d8748095808471deaa8e6f34aa700e37f2f787f4425744f53fdd15a89c40",
+    strip_prefix = "sqlite-amalgamation-3470200",
     urls = [
-        "https://www.sqlite.org/2022/sqlite-amalgamation-3390200.zip",
+        "https://www.sqlite.org/2024/sqlite-amalgamation-3470200.zip",
     ],
 )
 
 http_archive(
     name = "com_google_googletest",
-    sha256 = "81964fe578e9bd7c94dfdb09c8e4d6e6759e19967e397dbea48d1c10e45d0df2",
-    strip_prefix = "googletest-release-1.12.1",
-    urls = ["https://github.com/google/googletest/archive/refs/tags/release-1.12.1.tar.gz"],
+    sha256 = "7b42dc4b2106035276f8f0a5019c929a77d9c606ab43b8e0e1c4b7cc27c8e5ce",
+    strip_prefix = "googletest-release-1.15.2",
+    urls = ["https://github.com/google/googletest/archive/refs/tags/release-1.15.2.tar.gz"],
 )
 
 http_archive(
@@ -84,13 +79,13 @@ http_archive(
     sha256 = "6281aa4eeecb9e932d7091f99872e7b26fa6aacece49c15ce5b14af2b7ec050f",
 )
 
-# 1.5.0
+# 1.7.1
 http_archive(
     name = "bazel_skylib",
-    sha256 = "cd55a062e763b9349921f0f5db8c3933288dc8ba4f76dd9416aac68acee3cb94",
+    sha256 = "bc283cdfcd526a52c3201279cda4bc298652efa898b10b4db0837dc51652756f",
     urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.5.0/bazel-skylib-1.5.0.tar.gz",
-        "https://github.com/bazelbuild/bazel-skylib/releases/download/1.5.0/bazel-skylib-1.5.0.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.7.1/bazel-skylib-1.7.1.tar.gz",
+        "https://github.com/bazelbuild/bazel-skylib/releases/download/1.7.1/bazel-skylib-1.7.1.tar.gz",
     ],
 )
 
@@ -136,9 +131,10 @@ http_archive(
 http_archive(
     name = "pybind11",
     urls = [
-        "https://github.com/pybind/pybind11/archive/v2.10.1.tar.gz",
+        "https://github.com/pybind/pybind11/archive/v2.13.6.tar.gz",
     ],
-    strip_prefix = "pybind11-2.10.1",
+    sha256 = "e08cb87f4773da97fa7b5f035de8763abc656d87d5773e62f6da0587d1f0ec20",
+    strip_prefix = "pybind11-2.13.6",
     build_file = "@pybind11_bazel//:pybind11.BUILD",
 )
 

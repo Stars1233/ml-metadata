@@ -94,7 +94,9 @@ cc_library(
         "config/pg_config_paths.h",
         "config/pg_config_types.h",
     ],
-    copts = [],
+    copts = [
+        "-Wno-implicit-function-declaration",
+    ],
     defines = [
         "FRONTEND",
     ] + select({
