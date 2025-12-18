@@ -247,33 +247,7 @@ http_archive(
     url = "https://github.com/gflags/gflags/archive/a738fdf9338412f83ab3f26f31ac11ed3f3ec4bd.zip",
 )
 
-ZETASQL_COMMIT = "ac37cf5c0d80b5605176fc0f29e87b12f00be693" # 08/10/2022
-http_archive(
-    name = "com_google_zetasql",
-    urls = ["https://github.com/google/zetasql/archive/%s.zip" % ZETASQL_COMMIT],
-    strip_prefix = "googlesql-%s" % ZETASQL_COMMIT,
-    #patches = ["//ml_metadata/third_party:zetasql.patch"],
-    sha256 = '86f81591ab5ec20457a5394eb2c5c981e6f6c89f4c49c211d096c3acffec1eb1'
-)
-
-load("@com_google_zetasql//bazel:zetasql_deps_step_1.bzl", "zetasql_deps_step_1")
-zetasql_deps_step_1()
-load("@com_google_zetasql//bazel:zetasql_deps_step_2.bzl", "zetasql_deps_step_2")
-zetasql_deps_step_2(
-    analyzer_deps = True,
-    evaluator_deps = True,
-    tools_deps = False,
-    java_deps = False,
-    testing_deps = False)
-
-# This is part of what zetasql_deps_step_3() does.
-load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
-switched_rules_by_language(
-    name = "com_google_googleapis_imports",
-    cc = True,
-)
-
-
+# ZetaSQL removed - not needed for core functionality
 
 # Please add all new ML Metadata dependencies in workspace.bzl.
 load("//ml_metadata:workspace.bzl", "ml_metadata_workspace")

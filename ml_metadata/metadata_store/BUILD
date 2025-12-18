@@ -271,8 +271,9 @@ cc_library(
         "@com_google_absl//absl/strings",
         "//ml_metadata/proto:metadata_source_proto",
         "//ml_metadata/proto:metadata_store_proto",
-        "//ml_metadata/query:filter_query_ast_resolver",
-        "//ml_metadata/query:filter_query_builder",
+        # ZetaSQL filter query dependencies removed
+        # "//ml_metadata/query:filter_query_ast_resolver",
+        # "//ml_metadata/query:filter_query_builder",
         "//ml_metadata/util:return_utils",
         "//ml_metadata/util:struct_utils",
         "@com_google_glog//:glog",
@@ -999,8 +1000,9 @@ cc_library(
         "@com_google_absl//absl/strings",
         "//ml_metadata/proto:metadata_source_proto",
         "//ml_metadata/proto:metadata_store_proto",
-        "//ml_metadata/query:filter_query_ast_resolver",
-        "//ml_metadata/query:filter_query_builder",
+        # ZetaSQL filter query dependencies removed
+        # "//ml_metadata/query:filter_query_ast_resolver",
+        # "//ml_metadata/query:filter_query_builder",
         "//ml_metadata/util:return_utils",
         "//ml_metadata/util:struct_utils",
         "@com_google_glog//:glog",

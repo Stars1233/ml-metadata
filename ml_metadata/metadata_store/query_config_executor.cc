@@ -33,8 +33,9 @@ limitations under the License.
 #include "ml_metadata/metadata_store/list_operation_query_helper.h"
 #include "ml_metadata/proto/metadata_source.pb.h"
 #include "ml_metadata/proto/metadata_store.pb.h"
-#include "ml_metadata/query/filter_query_ast_resolver.h"
-#include "ml_metadata/query/filter_query_builder.h"
+// ZetaSQL filter query removed - feature disabled
+// #include "ml_metadata/query/filter_query_ast_resolver.h"
+// #include "ml_metadata/query/filter_query_builder.h"
 #include "ml_metadata/util/return_utils.h"
 #include "ml_metadata/util/struct_utils.h"
 
@@ -825,35 +826,10 @@ absl::Status QueryConfigExecutor::ListNodeIDsUsingOptions(
         "Invalid Node passed to ListNodeIDsUsingOptions");
   }
 
+  // ZetaSQL filter_query feature removed - not supported
   if (options.has_filter_query() && !options.filter_query().empty()) {
-    // DEPRECATED: ZetaSQL-based filter_query is deprecated and will be removed
-    // in version 1.18.0. This feature depends on ZetaSQL which is being phased
-    // out. Please migrate to alternative filtering approaches.
-    LOG(WARNING) << "DEPRECATION WARNING: ZetaSQL-based filter_query is "
-                 << "deprecated and will be removed in version 1.18.0. "
-                 << "This feature depends on ZetaSQL which is being removed.";
-    node_table_alias = ml_metadata::FilterQueryBuilder<Node>::kBaseTableAlias;
-    ml_metadata::FilterQueryAstResolver<Node> ast_resolver(
-        options.filter_query());
-    const absl::Status ast_gen_status = ast_resolver.Resolve();
-    if (!ast_gen_status.ok()) {
-      return absl::InvalidArgumentError(
-          absl::StrCat("Invalid `filter_query`: ", ast_gen_status.message()));
-    }
-    // Generate SQL
-    ml_metadata::FilterQueryBuilder<Node> query_builder;
-    const absl::Status sql_gen_status =
-        ast_resolver.GetAst()->Accept(&query_builder);
-    if (!sql_gen_status.ok()) {
-      return absl::InvalidArgumentError(
-          absl::StrCat("Failed to construct valid SQL from `filter_query`: ",
-                       sql_gen_status.message()));
-    }
-    sql_query = absl::Substitute(
-        "SELECT distinct $0.`id` FROM $1 WHERE $2 AND ", *node_table_alias,
-        // TODO(b/257334039): remove query_version-conditional logic
-        query_builder.GetFromClause(query_version),
-        query_builder.GetWhereClause());
+    return absl::UnimplementedError(
+        "filter_query is not supported - ZetaSQL dependency removed");
   }
 
   if (candidate_ids) {
