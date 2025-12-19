@@ -47,7 +47,7 @@ jobs:
         fi
         chmod +x /tmp/bazelisk
         sudo mv /tmp/bazelisk /usr/local/bin/bazel
-        echo "USE_BAZEL_VERSION=6.5.0" >> $GITHUB_ENV
+        echo "USE_BAZEL_VERSION=6.1.0" >> $GITHUB_ENV
         bazel --version
 
     - name: Build the package
@@ -56,9 +56,16 @@ jobs:
         python setup.py bdist_wheel
 
     - name: Install built wheel (Linux/macOS)
+      if: runner.os != 'Windows'
       shell: bash -l {0}
       run: |
         pip install dist/*.whl
+
+    - name: Install built wheel (Windows)
+      if: runner.os == 'Windows'
+      shell: bash -l {0}
+      run: |
+        pip install (Get-ChildItem dist/*.whl | Select-Object -First 1).FullName
 
     - name: Run tests
       shell: bash -l {0}

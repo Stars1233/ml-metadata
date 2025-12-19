@@ -7,8 +7,11 @@ on:
   pull_request:
     branches:
       - master
+<<<<<<< HEAD
   release:
     types: [published]
+=======
+>>>>>>> e14311a (feat: Replace Docker builds with conda-based CI workflows)
   workflow_dispatch:
 
 jobs:
@@ -49,26 +52,21 @@ jobs:
         fi
         chmod +x /tmp/bazelisk
         sudo mv /tmp/bazelisk /usr/local/bin/bazel
-        echo "USE_BAZEL_VERSION=6.5.0" >> $GITHUB_ENV
+        echo "USE_BAZEL_VERSION=6.1.0" >> $GITHUB_ENV
         bazel --version
-
-    - name: Install build tooling
-      shell: bash -l {0}
-      run: |
-        python -m pip install --upgrade pip build wheel "setuptools<69.3"
 
     - name: Build the package
       shell: bash -l {0}
       run: |
-        python -m build --wheel --no-isolation
+        python setup.py bdist_wheel
 
-    - name: Repair wheel for manylinux
+    - name: Repair wheel (Linux)
       if: runner.os == 'Linux'
       shell: bash -l {0}
       run: |
-        python -m pip install auditwheel
         WHEEL_PATH="$(ls dist/*.whl)"
-        auditwheel repair --plat auto -w dist "${WHEEL_PATH}"
+        WHEEL_DIR=$(dirname "${WHEEL_PATH}")
+        auditwheel repair --plat manylinux2014_x86_64 -w "${WHEEL_DIR}" "${WHEEL_PATH}"
         rm "${WHEEL_PATH}"
 
     - name: Upload wheel artifact
@@ -85,6 +83,11 @@ jobs:
     environment:
       name: pypi
       url: https://pypi.org/p/ml-metadata/
+<<<<<<< HEAD
+=======
+    permissions:
+      id-token: write
+>>>>>>> e14311a (feat: Replace Docker builds with conda-based CI workflows)
     steps:
       - name: Retrieve wheels
         uses: actions/download-artifact@v4.1.8
@@ -100,5 +103,8 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1.9
         with:
           packages_dir: wheels/
+<<<<<<< HEAD
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
+=======
+>>>>>>> e14311a (feat: Replace Docker builds with conda-based CI workflows)
