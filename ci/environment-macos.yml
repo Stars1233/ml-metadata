@@ -1,0 +1,23 @@
+# Conda environment for building and testing ml-metadata on macOS
+name: mlmd-dev
+channels:
+  - conda-forge
+dependencies:
+  # Note: Bazel is installed separately via official installer (conda package is unreliable)
+  - python=3.11  # Python 3.14 has compatibility issues with ZetaSQL build tools
+  - setuptools
+  - wheel
+  - pip
+  - numpy
+  - pytest
+  - pytest-cov
+  - cmake=3.29  # Required for building libmysqlclient (CMake 4.x is incompatible)
+  - six  # Required by ZetaSQL build tools
+  - libiconv  # Required by libmysqlclient for character encoding conversions
+
+  # C/C++ compilers
+  - clang
+  - clangxx
+
+  - pip:
+    - delocate  # For macOS wheel repair

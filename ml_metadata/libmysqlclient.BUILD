@@ -26,7 +26,7 @@ genrule(
         "cd $$TMP_DIR",
         "mkdir build",
         "cd build",
-        "cmake .. -DCMAKE_BUILD_TYPE=Release $${CMAKE_ICONV_FLAG-}",
+        "cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_DISABLE_FIND_PACKAGE_Iconv=ON -DICONV_LIBRARIES=$${CONDA_PREFIX}/lib/libiconv.dylib -DICONV_INCLUDE_DIR=$${CONDA_PREFIX}/include $${CMAKE_ICONV_FLAG-}",
         "cd ..",
         "cp -R ./build/* $$INSTALL_DIR",
         "rm -rf $$TMP_DIR",
@@ -36,6 +36,12 @@ genrule(
 config_setting(
     name = "darwin",
     values = {"cpu": "darwin"},
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "darwin_arm64",
+    values = {"cpu": "darwin_arm64"},
     visibility = ["//visibility:public"],
 )
 
@@ -91,13 +97,19 @@ cc_library(
         "-DLIBICONV_PLUG",
         "-DHAVE_OPENSSL",
         "-DHAVE_TLS",
-        # GCC 13 / Ubuntu 24.04 compatibility: define legacy MySQL types using stdint.h types
-        "-Duint=uint32_t",
-        "-Dushort=uint16_t",
-        "-Dulong=uint64_t",
         # Fix implicit function declarations
         "-D_GNU_SOURCE",
-    ],
+    ] + select({
+        # On Linux/GCC 13 / Ubuntu 24.04: define legacy MySQL types using stdint.h types
+        # On macOS: these types are already correct size, don't redefine to avoid conflicts
+        ":darwin": [],
+        ":darwin_arm64": [],
+        "//conditions:default": [
+            "-Duint=uint32_t",
+            "-Dushort=uint16_t",
+            "-Dulong=uint64_t",
+        ],
+    }),
     includes = [
         "build/include/",
         "include/",
@@ -109,6 +121,7 @@ cc_library(
         "-lm",
     ] + select({
         ":darwin": ["-liconv"],
+        ":darwin_arm64": ["-liconv"],
         "//conditions:default": [],
     }),
     visibility = ["//visibility:public"],

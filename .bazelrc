@@ -43,3 +43,8 @@ build --host_copt=-Wno-array-parameter
 build --host_copt=-Wno-implicit-function-declaration
 build --linkopt=-Wl,--no-as-needed
 build --host_linkopt=-Wl,--no-as-needed
+build:macos_arm64 --copt=-Wno-error=c23-extensions
+build:macos_arm64 --host_copt=-Wno-error=c23-extensions
+build:macos_arm64 --copt=-Wno-c23-extensions
+build:macos_arm64 --host_copt=-Wno-c23-extensions
+build:macos_arm64 --action_env=CONDA_PREFIX
