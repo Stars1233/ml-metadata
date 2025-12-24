@@ -4,7 +4,6 @@ channels:
   - conda-forge
 dependencies:
   # Note: Bazel is installed separately via official installer (conda package is unreliable)
-  - python=3.11  # Python 3.14 has compatibility issues with ZetaSQL build tools
   - setuptools
   - wheel
   - pip

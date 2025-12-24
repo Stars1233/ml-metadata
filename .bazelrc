@@ -51,4 +51,4 @@ build:macos_arm64 --host_copt=-Wno-error=c23-extensions
 build:macos_arm64 --copt=-Wno-c23-extensions
 build:macos_arm64 --host_copt=-Wno-c23-extensions
 build:macos_arm64 --action_env=CONDA_PREFIX
-build:macos_arm64 --action_env=CMAKE_ICONV_FLAG=-DCMAKE_DISABLE_FIND_PACKAGE_Iconv=ON -DICONV_LIBRARIES=$CONDA_PREFIX/lib/libiconv.dylib -DICONV_INCLUDE_DIR=$CONDA_PREFIX/include
+build:macos_arm64 --action_env=CMAKE_ICONV_FLAG="-DCMAKE_DISABLE_FIND_PACKAGE_Iconv=ON -DICONV_LIBRARIES=$CONDA_PREFIX/lib/libiconv.dylib -DICONV_INCLUDE_DIR=$CONDA_PREFIX/include"
