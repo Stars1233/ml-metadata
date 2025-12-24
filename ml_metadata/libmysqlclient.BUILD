@@ -26,7 +26,7 @@ genrule(
         "cd $$TMP_DIR",
         "mkdir build",
         "cd build",
-        "cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_DISABLE_FIND_PACKAGE_Iconv=ON -DICONV_LIBRARIES=$${CONDA_PREFIX}/lib/libiconv.dylib -DICONV_INCLUDE_DIR=$${CONDA_PREFIX}/include $${CMAKE_ICONV_FLAG-}",
+        "cmake .. -DCMAKE_BUILD_TYPE=Release $${CMAKE_ICONV_FLAG-}",
         "cd ..",
         "cp -R ./build/* $$INSTALL_DIR",
         "rm -rf $$TMP_DIR",

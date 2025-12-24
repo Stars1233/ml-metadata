@@ -36,13 +36,13 @@ build --host_cxxopt=-std=c++17
 build --copt=-Wno-error
 build --cxxopt=-Wno-error
 build --cxxopt=-fpermissive
-build --copt=-Wno-array-parameter
-build --copt=-Wno-implicit-function-declaration
+build --conlyopt=-Wno-array-parameter
+build --conlyopt=-Wno-implicit-function-declaration
 build --host_copt=-Wno-error
 build --host_cxxopt=-Wno-error
 build --host_cxxopt=-fpermissive
-build --host_copt=-Wno-array-parameter
-build --host_copt=-Wno-implicit-function-declaration
+build --host_conlyopt=-Wno-array-parameter
+build --host_conlyopt=-Wno-implicit-function-declaration
 # Linux-only linker flags (not supported on macOS)
 build:linux --linkopt=-Wl,--no-as-needed
 build:linux --host_linkopt=-Wl,--no-as-needed
@@ -51,3 +51,4 @@ build:macos_arm64 --host_copt=-Wno-error=c23-extensions
 build:macos_arm64 --copt=-Wno-c23-extensions
 build:macos_arm64 --host_copt=-Wno-c23-extensions
 build:macos_arm64 --action_env=CONDA_PREFIX
+build:macos_arm64 --action_env=CMAKE_ICONV_FLAG=-DCMAKE_DISABLE_FIND_PACKAGE_Iconv=ON -DICONV_LIBRARIES=$CONDA_PREFIX/lib/libiconv.dylib -DICONV_INCLUDE_DIR=$CONDA_PREFIX/include
