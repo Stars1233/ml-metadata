@@ -125,3 +125,69 @@ MLMD is built and tested on the following 64-bit operating systems:
 *   Ubuntu 20.04 or later.
 *   [DEPRECATED] Windows 10 or later. For a Windows-compatible library, please
     refer to MLMD 1.14.0 or earlier versions.
+
+## Releasing Wheels to PyPI
+
+### Setup (Required for both release methods)
+
+Before releasing, you need to set up the PyPI environment and token once:
+
+**Step 1: Create PyPI environment**
+
+Create a new environment named `pypi` in the GitHub repository:
+- Go to https://github.com/google/ml-metadata/settings/environments/new
+- Name it `pypi`
+- Click "Configure environment"
+
+**Step 2: Add PYPI_TOKEN secret**
+
+Add your PyPI token to the `pypi` environment:
+- In the `pypi` environment settings, scroll to "Environment secrets"
+- Click "Add secret"
+- Name: `PYPI_TOKEN` (use this exact name)
+- Value: Your PyPI API token
+- Click "Add secret"
+
+**Step 3: Commit and push your release branch**
+
+Ensure your release branch has the correct version set in `ml_metadata/version.py`, then:
+
+```bash
+git add .
+git commit -m "Prepare release vX.Y.Z"
+git push origin your-release-branch
+```
+
+### Part 1: Releasing via `workflow_dispatch`
+
+This method allows you to manually trigger a release from any branch without creating a GitHub release.
+
+**Steps** (after completing setup above):
+
+1. Navigate to the GitHub Actions page: https://github.com/google/ml-metadata/actions
+2. Find and select the `Build ml-metadata with Conda` workflow: https://github.com/google/ml-metadata/actions/workflows/conda-build.yml
+3. Look for "This workflow has a workflow_dispatch event trigger."
+4. Click the "Run workflow" dropdown button.
+5. Select your release branch from the dropdown menu.
+6. Click "Run workflow".
+
+The workflow will build wheels for all supported Python versions and automatically upload them to PyPI if the token is configured correctly.
+
+### Part 2: Releasing via GitHub Release
+
+This method creates a formal GitHub release with a tag, which automatically triggers the build and upload workflow.
+
+**Steps** (after completing setup above):
+
+1. Go to the Releases tab: https://github.com/google/ml-metadata/releases
+2. Click the `Draft new release` button (you'll be redirected to https://github.com/google/ml-metadata/releases/new)
+3. Click the `Select tag` button and create a new tag for your release (e.g., `v1.18.0`)
+4. Click the `Target` dropdown and select your release branch
+5. Fill in the **Release title** and **Release notes** sections
+6. Choose the release type:
+   - Check `Set as a pre-release` if this is a beta/test release
+   - Leave unchecked for `Set as the latest release` for stable releases
+7. Click the `Publish release` button
+8. Verify the workflow is running by going to the Actions tab: https://github.com/google/ml-metadata/actions/workflows/conda-build.yml
+
+The `Build ml-metadata with Conda` workflow will automatically trigger and build/upload wheels to PyPI if the token is configured correctly.
