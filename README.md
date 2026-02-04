@@ -153,7 +153,7 @@ Add your PyPI token to the `pypi` environment:
 Ensure your release branch has the correct version set in `ml_metadata/version.py`, then:
 
 ```bash
-git add .
+git add ml_metadata/version.py
 git commit -m "Prepare release vX.Y.Z"
 git push origin your-release-branch
 ```
@@ -166,10 +166,9 @@ This method allows you to manually trigger a release from any branch without cre
 
 1. Navigate to the GitHub Actions page: https://github.com/google/ml-metadata/actions
 2. Find and select the `Build ml-metadata with Conda` workflow: https://github.com/google/ml-metadata/actions/workflows/conda-build.yml
-3. Look for "This workflow has a workflow_dispatch event trigger."
-4. Click the "Run workflow" dropdown button.
-5. Select your release branch from the dropdown menu.
-6. Click "Run workflow".
+3. Click the "Run workflow" dropdown button.
+4. Select your release branch from the dropdown menu.
+5. Click "Run workflow".
 
 The workflow will build wheels for all supported Python versions and automatically upload them to PyPI if the token is configured correctly.
 
