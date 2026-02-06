@@ -15,7 +15,6 @@
 import collections
 import os
 import uuid
-import warnings
 
 import pytest
 from absl.testing import absltest, parameterized

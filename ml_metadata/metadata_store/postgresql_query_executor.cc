@@ -32,9 +32,6 @@ limitations under the License.
 #include "ml_metadata/metadata_store/query_executor.h"
 #include "ml_metadata/proto/metadata_source.pb.h"
 #include "ml_metadata/proto/metadata_store.pb.h"
-// ZetaSQL filter query removed - feature disabled
-// #include "ml_metadata/query/filter_query_ast_resolver.h"
-// #include "ml_metadata/query/filter_query_builder.h"
 #include "ml_metadata/util/return_utils.h"
 #include "ml_metadata/util/struct_utils.h"
 

@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        python-version: ["3.9", "3.10", "3.11", "3.13"]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
 
     steps:
     - name: Checkout
@@ -55,17 +55,10 @@ jobs:
       run: |
         python setup.py bdist_wheel
 
-    - name: Install built wheel (Linux/macOS)
-      if: runner.os != 'Windows'
+    - name: Install built wheel
       shell: bash -l {0}
       run: |
         pip install dist/*.whl
-
-    - name: Install built wheel (Windows)
-      if: runner.os == 'Windows'
-      shell: bash -l {0}
-      run: |
-        pip install (Get-ChildItem dist/*.whl | Select-Object -First 1).FullName
 
     - name: Run tests
       shell: bash -l {0}
