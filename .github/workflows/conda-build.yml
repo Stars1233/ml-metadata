@@ -7,11 +7,8 @@ on:
   pull_request:
     branches:
       - master
-<<<<<<< HEAD
   release:
     types: [published]
-=======
->>>>>>> e14311a (feat: Replace Docker builds with conda-based CI workflows)
   workflow_dispatch:
 
 jobs:
@@ -83,11 +80,6 @@ jobs:
     environment:
       name: pypi
       url: https://pypi.org/p/ml-metadata/
-<<<<<<< HEAD
-=======
-    permissions:
-      id-token: write
->>>>>>> e14311a (feat: Replace Docker builds with conda-based CI workflows)
     steps:
       - name: Retrieve wheels
         uses: actions/download-artifact@v4.1.8
@@ -103,8 +95,5 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1.9
         with:
           packages_dir: wheels/
-<<<<<<< HEAD
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
-=======
->>>>>>> e14311a (feat: Replace Docker builds with conda-based CI workflows)
