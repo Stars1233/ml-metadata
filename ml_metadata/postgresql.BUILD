@@ -94,7 +94,9 @@ cc_library(
         "config/pg_config_paths.h",
         "config/pg_config_types.h",
     ],
-    copts = [],
+    copts = [
+        "-Wno-implicit-function-declaration",
+    ],
     defines = [
         "FRONTEND",
     ] + select({
@@ -103,6 +105,7 @@ cc_library(
             "HAVE_STRLCPY=1",
             "HAVE_STRUCT_SOCKADDR_STORAGE_SS_LEN=1",
             "HAVE_SYS_UCRED_H=1",
+            "HAVE_STRCHRNUL=1",
         ],
         "//conditions:default": [
             "_GNU_SOURCE",
@@ -899,7 +902,7 @@ genrule(
             "#define HAVE_STDLIB_H 1",
             "",
             "/* Define to 1 if you have the `strchrnul' function. */",
-            "/* #undef HAVE_STRCHRNUL */",
+            "#define HAVE_STRCHRNUL 1",
             "",
             "/* Define to 1 if you have the `strerror_r' function. */",
             "#define HAVE_STRERROR_R 1",
@@ -1146,7 +1149,7 @@ genrule(
             "/* #undef HAVE__CPUID */",
             "",
             "/* Define to 1 if you have __get_cpuid. */",
-            "#define HAVE__GET_CPUID 1",
+            "/* #undef HAVE__GET_CPUID */",
             "",
             "/* Define to 1 if your compiler understands _Static_assert. */",
             "#define HAVE__STATIC_ASSERT 1",

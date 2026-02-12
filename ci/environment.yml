@@ -13,9 +13,8 @@ dependencies:
   - patchelf  # For wheel repair on Linux
   - cmake=3.29
 
-  # C/C++ compilers - GCC 8.x to match manylinux2014 devtoolset-8
-  - gcc_linux-64=8.5.0
-  - gxx_linux-64=8.5.0
+  - gcc_linux-64
+  - gxx_linux-64
   - sysroot_linux-64=2.17  # CentOS 7/manylinux2014 compatible glibc headers
 
   - pip:

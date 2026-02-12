@@ -17,8 +17,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
-        python-version: ["3.9", "3.10", "3.11"]
+        os: [ubuntu-latest, macos-latest]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
 
     steps:
     - name: Checkout
@@ -27,7 +27,7 @@ jobs:
     - name: Setup Micromamba
       uses: mamba-org/setup-micromamba@v1
       with:
-        environment-file: ci/environment.yml
+        environment-file: ${{ matrix.os == 'macos-latest' && 'ci/environment-macos.yml' || 'ci/environment.yml' }}
         cache-environment: true
         create-args: >-
           python=${{ matrix.python-version }}
@@ -62,7 +62,7 @@ jobs:
       run: |
         python -m build --wheel --no-isolation
 
-    - name: Repair wheel for manylinux
+    - name: Repair wheel (Linux)
       if: runner.os == 'Linux'
       shell: bash -l {0}
       run: |

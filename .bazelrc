@@ -15,6 +15,7 @@
 # This macro is needed in order for mlmd to build with ZetaSQL which can only
 # be compiled upon c++17 or higher.
 build --cxxopt="-std=c++17"
+build --host_cxxopt="-std=c++17"
 
 # Needed to avoid zetasql proto error.
 build --protocopt=--experimental_allow_proto3_optional
@@ -26,3 +27,28 @@ build --incompatible_require_linker_input_cc_api=false
 
 build:macos --apple_platform_type=macos
 build:macos_arm64 --cpu=darwin_arm64
+build:macos_arm64 --linkopt=-Wl,-undefined,dynamic_lookup
+build:macos_arm64 --host_linkopt=-Wl,-undefined,dynamic_lookup
+build --conlyopt=-std=c11
+build --host_conlyopt=-std=c11
+build --cxxopt=-std=c++17
+build --host_cxxopt=-std=c++17
+build --copt=-Wno-error
+build --cxxopt=-Wno-error
+build --cxxopt=-fpermissive
+build --conlyopt=-Wno-array-parameter
+build --conlyopt=-Wno-implicit-function-declaration
+build --host_copt=-Wno-error
+build --host_cxxopt=-Wno-error
+build --host_cxxopt=-fpermissive
+build --host_conlyopt=-Wno-array-parameter
+build --host_conlyopt=-Wno-implicit-function-declaration
+# Linux-only linker flags (not supported on macOS)
+build:linux --linkopt=-Wl,--no-as-needed
+build:linux --host_linkopt=-Wl,--no-as-needed
+build:macos_arm64 --copt=-Wno-error=c23-extensions
+build:macos_arm64 --host_copt=-Wno-error=c23-extensions
+build:macos_arm64 --copt=-Wno-c23-extensions
+build:macos_arm64 --host_copt=-Wno-c23-extensions
+build:macos_arm64 --action_env=CONDA_PREFIX
+build:macos_arm64 --action_env=CMAKE_ICONV_FLAG="-DCMAKE_DISABLE_FIND_PACKAGE_Iconv=ON -DICONV_LIBRARIES=$CONDA_PREFIX/lib/libiconv.dylib -DICONV_INCLUDE_DIR=$CONDA_PREFIX/include"
