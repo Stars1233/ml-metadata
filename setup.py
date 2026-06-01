@@ -45,6 +45,10 @@ class _BuildCommand(build.build):
     - python setup.py bdist_wheel (which invokes bdist_wheel command)
   """
 
+  def finalize_options(self):
+    build.build.finalize_options(self)
+    self.build_base = 'build_mlmd_tmp'
+
   def _build_cc_extensions(self):
     return True
 
@@ -109,6 +113,7 @@ class _BazelBuildCommand(setuptools.Command):
         [self._bazel_cmd, 'run',
          '--compilation_mode', 'opt',
          '--define', 'grpc_no_ares=true',
+         '--define', 'grpc_no_xds=true',
          '--verbose_failures',
          *self._additional_build_options,
          '//ml_metadata:move_generated_files'],
@@ -148,9 +153,10 @@ setup(
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
         'Programming Language :: Python :: 3 :: Only',
         'Topic :: Scientific/Engineering',
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
@@ -166,7 +172,7 @@ setup(
         'absl-py>=0.9,<2.0.0',
         'attrs>=20.3,<24',
         'grpcio>=1.8.6,<2',
-        f'protobuf>={"4.25.2" if _IS_PY311 else "4.21.6"},<5',
+        'protobuf>=6.31.1,<7',
         'six>=1.10,<2',
     ],
     extras_require={
@@ -174,7 +180,7 @@ setup(
         # TODO: Pin versions for docs
         "docs": docs_reqs,
     },
-    python_requires='>=3.9,<4',
+    python_requires='>=3.10,<4',
     packages=find_packages(),
     include_package_data=True,
     package_data={'': ['*.so', '*.pyd']},

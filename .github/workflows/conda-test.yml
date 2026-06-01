@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
 
     steps:
     - name: Checkout
@@ -47,12 +47,13 @@ jobs:
         fi
         chmod +x /tmp/bazelisk
         sudo mv /tmp/bazelisk /usr/local/bin/bazel
-        echo "USE_BAZEL_VERSION=6.5.0" >> $GITHUB_ENV
+        echo "USE_BAZEL_VERSION=7.7.0" >> $GITHUB_ENV
         bazel --version
 
     - name: Build the package
       shell: bash -l {0}
       run: |
+        rm -rf build build_mlmd_tmp dist
         python setup.py bdist_wheel
 
     - name: Install built wheel
